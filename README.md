@@ -8,7 +8,7 @@ NAVER_MAP_CLIENT_ID=네이버_지도_클라이언트_키
 2. 본인 키 넣기
 3. 빌드 전에 아래 실행하기  
 ```
-$env:NAVER_MAP_CLIENT_ID="24y09o8euj"
+$env:NAVER_MAP_CLIENT_ID=네이버_지도_클라이언트_키
 flutter clean
 flutter run
 ```
