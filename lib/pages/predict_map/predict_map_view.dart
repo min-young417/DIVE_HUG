@@ -1,0 +1,182 @@
+import 'package:dive_hug/common/custom_textfiled.dart';
+import 'package:dive_hug/pages/predict_map/widgets/custom_thumb_shape.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:dive_hug/pages/predict_map/predict_map_controller.dart';
+
+class PredictMapView extends GetView<PredictMapController> {
+  const PredictMapView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xfff8f8f8),
+          leading: Padding(
+            padding: EdgeInsetsGeometry.only(left: 14.w),
+            child: Image.asset('assets/icons/left-arrow.png'),
+          ),
+          title: Text(
+            '인근지역 시세조회',
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500
+            ),
+          ),
+          actions: [
+            Image.asset(
+              'assets/icons/home.png',
+              width: 22.sp,
+              height: 22.sp,
+            ),
+            SizedBox(width: 18.w,),
+            Image.asset(
+              'assets/icons/hambuger-menu.png',
+              width: 18.sp,
+              height: 18.sp,
+            ),
+            SizedBox(width: 14.w,),
+          ],
+        ),
+        body: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
+              child: Row(
+                spacing: 6.w,
+                children: [
+                  Image.asset(
+                    'assets/icons/caution.png',
+                    width: 14.sp,
+                    height: 14.sp,
+                  ),
+                  Text(
+                    '지도에 표출되지 않는 주소는 직접 검색하면 시세가 나와요!',
+                    style: TextStyle(
+                      fontSize: 10.sp
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              color: Color(0xfff8f8f8),
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+              child: CustomTextfiled(
+                hintText: '건물명, 도로명, 지번, 초성 검색',
+                suffix: GestureDetector(
+                  child: Image.asset(
+                    'assets/icons/search.png',
+                    width: 13.sp,
+                    height: 13.sp,
+                  ),
+                )
+              )
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  /// 지도
+                  NaverMap(
+                    options: NaverMapViewOptions(
+                      initialCameraPosition: NCameraPosition(
+                        target: NLatLng(35.1796, 129.0756), // 부산 좌표
+                        zoom: 10,
+                      ),
+                    ),
+                    onMapReady: (naverController) {
+                      if (!controller.naverMapController.isCompleted) {
+                        controller.naverMapController.complete(naverController);
+                      }
+                    },
+                  ),
+
+                  /// 줌 컨트롤 바
+                  Positioned(
+                    right: 16,
+                    top: 50,
+                    child: zoomBar(context)
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      )
+    );
+  }
+
+
+  /// 줌 컨트롤 바
+  Widget zoomBar(BuildContext context){
+    return Obx(() => Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Color(0xff6f6f6f)),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: controller.zoomIn,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Color.fromARGB(255, 202, 202, 202)))
+              ),
+              width: 24.w,
+              padding: EdgeInsets.symmetric(vertical: 6.h),
+              child: Image.asset(
+                'assets/icons/plus.png',
+                width: 10.sp,
+                height: 10.sp,),
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  trackHeight: 2,
+                  activeTrackColor: const Color.fromARGB(255, 0, 136, 247),
+                  inactiveTrackColor: Colors.grey[300],
+                  thumbColor: Colors.red,
+                  thumbShape: CustomThumbShape(
+                    thumbWidth: 6,
+                    thumbHeight: 14,
+                  ),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 8),
+                  tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 0),
+                ),
+                child: Slider(
+                  value: controller.zoom.value,
+                  min: 10,
+                  max: 15,
+                  divisions: ((15 - 10) / 0.5).round(),
+                  onChanged: (val) => controller.setZoom(val),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: controller.zoomOut,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(color: Color.fromARGB(255, 202, 202, 202)))
+              ),
+              width: 24.w,
+              padding: EdgeInsets.symmetric(vertical: 6.h),
+              child: Image.asset(
+                'assets/icons/minus.png',
+                width: 10.sp,
+                height: 10.sp,),
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+}

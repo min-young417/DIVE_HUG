@@ -28,6 +28,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        val naverMapClientId: String = System.getenv("NAVER_MAP_CLIENT_ID") ?: ""
+        resValue("string", "naver_map_client_id", naverMapClientId)
     }
 
     buildTypes {

@@ -1,16 +1,14 @@
 # dive_hug
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### .env.sample
+```
+NAVER_MAP_CLIENT_ID=네이버_지도_클라이언트_키
+```
+1. .bashrc.sample 을 .bahsrc 로 변경
+2. 본인 키 넣기
+3. 빌드 전에 아래 실행하기  
+```
+$env:NAVER_MAP_CLIENT_ID="24y09o8euj"
+flutter clean
+flutter run
+```
