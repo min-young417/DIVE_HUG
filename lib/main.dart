@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             return GetMaterialApp(
               title: 'HUG App Extension',
               theme: CustomTheme.themeData,
-              initialRoute: '/',
+              initialRoute: '/predictMap',
               getPages: GetXRouter.routes,
               defaultTransition: Transition.cupertino,
               debugShowCheckedModeBanner: false,

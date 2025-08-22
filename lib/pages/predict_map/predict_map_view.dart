@@ -133,6 +133,23 @@ class PredictMapView extends GetView<PredictMapController> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.toNamed('/chatbot');
+          },
+          backgroundColor: Colors.white,
+          highlightElevation: 0,
+          shape: CircleBorder(
+          side: BorderSide(
+            color: Colors.blue,
+            width: 2,     
+          ),
+        ),
+          child: Image.asset(
+            'assets/icons/chatbot.png',
+            width: 36.w,
+            height: 36.h,)
+        ),
     ));
   }
 
