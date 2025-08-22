@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:dive_hug/route/routes.dart';
 import 'package:dive_hug/common/custom_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
@@ -11,14 +10,6 @@ Future<void> main() async {
 
   // .env 파일 로드
   await dotenv.load(fileName: ".env");
-
-  // 네이버 지도 초기화
-  await FlutterNaverMap().init(
-    clientId: dotenv.env['NAVER_MAP_CLIENT_ID']!,
-    onAuthFailed: (ex) {
-      debugPrint("네이버 지도 인증 실패: $ex");
-    },
-  );
 
   runApp(const MyApp());
 }

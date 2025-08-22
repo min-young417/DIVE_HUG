@@ -4,18 +4,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomTextfiled extends StatelessWidget {
   CustomTextfiled({
     super.key,
+    required this.controller,
     required this.hintText,
-    this.suffix
+    this.suffix,
+    this.isNumber = false,
   });
 
+  final TextEditingController controller;
   final String hintText;
   Widget? suffix;
+  bool isNumber;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 34.h,
       child: TextField(
+        controller: controller,
+        keyboardType: isNumber ? TextInputType.number : null,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(

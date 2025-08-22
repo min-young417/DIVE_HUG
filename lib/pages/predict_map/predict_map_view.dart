@@ -1,10 +1,12 @@
 import 'package:dive_hug/common/custom_textfiled.dart';
 import 'package:dive_hug/pages/predict_map/widgets/custom_thumb_shape.dart';
-import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dive_hug/pages/predict_map/predict_map_controller.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PredictMapView extends GetView<PredictMapController> {
   const PredictMapView({super.key});
@@ -41,83 +43,107 @@ class PredictMapView extends GetView<PredictMapController> {
             SizedBox(width: 14.w,),
           ],
         ),
-        body: Column(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
-              child: Row(
-                spacing: 6.w,
-                children: [
-                  Image.asset(
-                    'assets/icons/caution.png',
-                    width: 14.sp,
-                    height: 14.sp,
+      body: Stack(
+        children: [
+          // 지도
+          Obx(() => FlutterMap(
+            mapController: controller.mapController,
+            options: MapOptions(
+              initialCenter: LatLng(35.1796, 129.0756),
+              initialZoom: 16,
+            ),
+            children: [
+              TileLayer(urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+              MarkerClusterLayerWidget(
+                options: MarkerClusterLayerOptions(
+                  maxClusterRadius: 25,
+                  markers: controller.markers.toList(),
+                  polygonOptions: PolygonOptions(
+                    borderColor: Colors.blueAccent,
+                    color: Colors.black12,
+                    borderStrokeWidth: 3,
                   ),
-                  Text(
-                    '지도에 표출되지 않는 주소는 직접 검색하면 시세가 나와요!',
-                    style: TextStyle(
-                      fontSize: 10.sp
+                  builder: (context, clusterMarkers) {
+                    return Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(clusterMarkers.length.toString(), style: TextStyle(color: Colors.white)),
+                    );
+                  },
+                ),
+              )
+            ],
+          )),
+
+          // UI
+          Column(
+            children: [
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
+                child: Row(
+                  spacing: 6.w,
+                  children: [
+                    Image.asset(
+                      'assets/icons/caution.png',
+                      width: 14.sp,
+                      height: 14.sp,
+                    ),
+                    Text(
+                      '지도에 표출되지 않는 주소는 직접 검색하면 시세가 나와요!',
+                      style: TextStyle(
+                        fontSize: 10.sp
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
+              // 검색
+              Container(
+                color: Color(0xfff8f8f8),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                child: CustomTextfiled(
+                  controller: TextEditingController(),
+                  hintText: '건물명, 도로명, 지번, 초성 검색',
+                  suffix: GestureDetector(
+                    child: Image.asset(
+                      'assets/icons/search.png',
+                      width: 13.sp,
+                      height: 13.sp,
                     ),
                   )
-                ],
-              ),
-            ),
-            Container(
-              color: Color(0xfff8f8f8),
-              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
-              child: CustomTextfiled(
-                hintText: '건물명, 도로명, 지번, 초성 검색',
-                suffix: GestureDetector(
-                  child: Image.asset(
-                    'assets/icons/search.png',
-                    width: 13.sp,
-                    height: 13.sp,
-                  ),
                 )
-              )
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  /// 지도
-                  NaverMap(
-                    options: NaverMapViewOptions(
-                      initialCameraPosition: NCameraPosition(
-                        target: NLatLng(35.1796, 129.0756), // 부산 좌표
-                        zoom: 10,
-                      ),
-                    ),
-                    onMapReady: (naverController) {
-                      if (!controller.naverMapController.isCompleted) {
-                        controller.naverMapController.complete(naverController);
-                      }
-                    },
-                  ),
-
-                  /// 줌 컨트롤 바
-                  Positioned(
-                    right: 16,
-                    top: 50,
-                    child: zoomBar(context)
-                  ),
-                ],
               ),
-            ),
-          ],
-        ),
-      )
-    );
+
+              /// 줌 컨트롤 바
+              Padding(
+                padding: EdgeInsetsGeometry.symmetric(vertical: 50.h, horizontal: 14.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    zoomControllBar(context),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    ));
   }
 
-
   /// 줌 컨트롤 바
-  Widget zoomBar(BuildContext context){
+  Widget zoomControllBar(BuildContext context){
     return Obx(() => Container(
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xff6f6f6f)),
         color: Colors.white,
       ),
+      width: 26.w,
       child: Column(
         children: [
           GestureDetector(
@@ -154,8 +180,8 @@ class PredictMapView extends GetView<PredictMapController> {
                 child: Slider(
                   value: controller.zoom.value,
                   min: 10,
-                  max: 15,
-                  divisions: ((15 - 10) / 0.5).round(),
+                  max: 17,
+                  divisions: ((17 - 10) / 0.5).round(),
                   onChanged: (val) => controller.setZoom(val),
                 ),
               ),
