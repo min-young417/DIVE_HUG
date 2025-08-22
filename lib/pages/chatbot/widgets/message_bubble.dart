@@ -1,5 +1,6 @@
 import 'package:dive_hug/pages/chatbot/models/message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -44,10 +45,10 @@ class MessageBubble extends StatelessWidget {
                       bottomRight: Radius.circular(12.sp))
               ),
               padding: const EdgeInsets.all(12),
-              child: Text(
-                msg.text,
-                style: TextStyle(
-                  color: isUser ? Colors.white : Colors.black,
+              child: MarkdownBody(
+                data: msg.text,
+                styleSheet: MarkdownStyleSheet(
+                  p: TextStyle(color: isUser ? Colors.white : Colors.black),
                 ),
               ),
             ),

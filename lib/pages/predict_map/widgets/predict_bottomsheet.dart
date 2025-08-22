@@ -170,7 +170,7 @@ class PredictBottomsheet extends StatelessWidget{
                       print(data);
             
                       if(priceController.text != '' && endDateController.text != '' && startDateController.text != ''){
-                        CommonFunction.showCustomSnackBar('위험도를 계산중입니다. 잠시만 기다려주세요.');
+                        CommonFunction.showCustomSnackBar('위험도를 계산중입니다.\n잠시만 기다려주세요.');
                         RiskResponse? result = await predictAndExplain(data);
                         
                         if(result != null){

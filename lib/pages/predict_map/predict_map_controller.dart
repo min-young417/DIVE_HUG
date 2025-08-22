@@ -40,6 +40,8 @@ class PredictMapController extends GetxController {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.blue,
+                image: DecorationImage(
+                  image: AssetImage('assets/icons/building.png'))
               ),
               width: 6.sp, height: 6.sp,)),
         ))

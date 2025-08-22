@@ -24,7 +24,7 @@ class PredictMapView extends GetView<PredictMapController> {
           title: Text(
             '인근지역 시세조회',
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500
             ),
           ),

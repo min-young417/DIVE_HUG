@@ -78,12 +78,12 @@ class RiskBottomsheet extends StatelessWidget {
                               '위험 수준',
                               style: TextStyle(fontWeight: FontWeight.w500),),
                             Text(
-                              score > 0.75 ? '매우 높음' : score > 0.5 ? "높음" : "보통",
+                              score > 75 ? '매우 높음' : score > 50 ? "높음" : "보통",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: score > 0.75 
-                                  ? Colors.red : score > 0.5 
+                                color: score > 75 
+                                  ? Colors.red : score > 50 
                                   ? Colors.orange : Colors.green
                               ),
                             )

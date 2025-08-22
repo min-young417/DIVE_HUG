@@ -9,8 +9,8 @@ class CustomTheme {
   static ThemeData themeData = ThemeData(
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      leadingWidth: 28.w,
-      toolbarHeight: 41.h,
+      leadingWidth: 34.w,
+      toolbarHeight: 46.h,
       centerTitle: true,
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: mainColor),

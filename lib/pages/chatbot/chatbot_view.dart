@@ -13,33 +13,45 @@ class ChatbotView extends GetView<ChatbotController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xfff8f8f8),
+          backgroundColor: Colors.blue,
           leading: Padding(
             padding: EdgeInsetsGeometry.only(left: 14.w),
-            child: GestureDetector(
-              onTap: (){
-                Get.back();
-              },
-              child: Image.asset('assets/icons/left-arrow.png')),
+            child: Image.asset(
+              'assets/icons/bell.png',
+              width: 22.sp,
+              height: 22.sp,
+            ),
           ),
           title: Text(
             '안심전세 챗봇',
             style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: Colors.white
             ),
           ),
           actions: [
             Image.asset(
-              'assets/icons/home.png',
+              'assets/icons/document.png',
               width: 22.sp,
               height: 22.sp,
             ),
-            SizedBox(width: 18.w,),
+            SizedBox(width: 8.w,),
             Image.asset(
-              'assets/icons/hambuger-menu.png',
-              width: 18.sp,
-              height: 18.sp,
+              'assets/icons/notice.png',
+              width: 22.sp,
+              height: 22.sp,
+            ),
+            SizedBox(width: 8.w,),
+            GestureDetector(
+              onTap: (){
+                Get.back();
+              },
+              child: Image.asset(
+                'assets/icons/close.png',
+                width: 18.sp,
+                height: 18.sp,
+              ),
             ),
             SizedBox(width: 14.w,),
           ],

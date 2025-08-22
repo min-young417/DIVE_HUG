@@ -45,16 +45,17 @@ class MessageTextfiled extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "무엇을 도와드릴까요?",
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
-                border: InputBorder.none, // 테두리 제거
+                border: InputBorder.none,
               ),
             ),
           ),
 
           // 전송 버튼
-          IconButton(
-            icon: Icon(Icons.send, color: Colors.grey[700]),
-            onPressed: onSend,
-          )
+          GestureDetector(
+            onTap: onSend,
+            child: Image.asset(
+              'assets/icons/send.png'),
+          ),
         ],
       ),
     );
