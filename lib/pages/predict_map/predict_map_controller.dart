@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dive_hug/common/common_function.dart';
 import 'package:dive_hug/common/location_service.dart';
 import 'package:dive_hug/pages/predict_map/widgets/select_dong_bottomsheet.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class PredictMapController extends GetxController {
     mapController.move(newPos, zoom.value);
   }
 
+  // 주택 표시
   Future<void> loadData() async {
     final jsonString = await rootBundle.loadString('assets/data/jeonse_data.json');
     final data = jsonDecode(jsonString) as List;
@@ -66,6 +68,32 @@ class PredictMapController extends GetxController {
               e['주택유형'] == '아파트'
                   ? 'assets/icons/apt_pin.png'
                   : 'assets/icons/home_pin.png')
+          )
+        ))
+        .toList()
+    );
+
+    loadRebuildData();
+  }
+
+  // 재개발, 재건축 구역 표시
+  Future<void> loadRebuildData() async {
+    final jsonString = await rootBundle.loadString('assets/data/rebuild_data.json');
+    final data = jsonDecode(jsonString) as List;
+    markers.addAll(
+      data
+        .where((e) => e['위도'] != null && e['경도'] != null)
+        .map((e) => Marker(
+          point: LatLng(e['위도'], e['경도']),
+          child: GestureDetector(
+            onTap: (){
+              CommonFunction.showCustomSnackBar(
+                '재개발·재건축 지역은 권리 관계가 복잡하고 사업 진행이 불확실해 전세금 회수가 지연될 수 있으며, 경우에 따라 보증보험 가입에도 제약이 생길 수 있습니다.'
+              );
+            },
+            child: Image.asset(
+              'assets/icons/rebuild.png',
+              width: 14.sp, height: 14.sp,)
           )
         ))
         .toList()
