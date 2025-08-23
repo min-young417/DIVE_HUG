@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dive_hug/common/location_service.dart';
 import 'package:dive_hug/pages/predict_map/models/risk_response.dart';
 import 'package:dive_hug/pages/predict_map/widgets/predict_bottomsheet.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,33 @@ class PredictMapController extends GetxController {
   final markers = <Marker>[].obs;
   final selected = Rxn<Map<String, dynamic>>();
   final riskScore = 0.0.obs;
+
+  // 내 위치 조회허가 + 지도 이동
+  Future<void> getLocation() async {
+    try {
+      final position = await LocationService.getCurrentLocation();
+      if (position != null) {
+        log('위도: ${position.latitude} 경도: ${position.longitude}');
+        moveTo(position.latitude, position.longitude);
+        markers.add(
+          Marker(
+            point: LatLng(position.latitude, position.longitude), 
+            child: Image.asset(
+              'assets/icons/pin.png',
+              width: 24.sp,
+              height: 24.sp,))
+        );
+      }
+    } catch (e) {
+      log('에러: $e');
+    }
+  }
+
+  // 위치 변경 함수
+  void moveTo(double lat, double lng) {
+    final newPos = LatLng(lat, lng);
+    mapController.move(newPos, zoom.value);
+  }
 
   Future<void> loadData() async {
     final jsonString = await rootBundle.loadString('assets/data/jeonse_data.json');
@@ -53,6 +81,7 @@ class PredictMapController extends GetxController {
   void onInit() {
     super.onInit();
 
+    getLocation();
     loadData();
   }
 

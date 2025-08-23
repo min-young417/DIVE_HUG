@@ -13,5 +13,6 @@ PREDICT_MODEL_SERVER_URL=예측_모델_서버_주소
 https://www.flaticon.com/kr/free-icons/-
 메뉴 아이콘 제작자: ariefstudio - Flaticon
 홈 개요 아이콘 제작자: Grand Iconic - Flaticon
+위치 아이콘 제작자: Andrean Prabowo - Flaticon
 Designed by Freepik
 "https://icons8.com/icon/11642/notification

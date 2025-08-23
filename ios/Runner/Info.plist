@@ -47,5 +47,9 @@
 	<true/>
 	<key>NMFClientId</key>
 	<string>$(NMFClientId)</string>
+
+	<!-- 위치 권한 -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>앱 사용 중 위치 정보가 필요합니다.</string>
 </dict>
 </plist>
