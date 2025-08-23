@@ -177,16 +177,11 @@ class PredictMapView extends GetView<PredictMapController> {
           },
           backgroundColor: Colors.white,
           highlightElevation: 0,
-          shape: CircleBorder(
-          side: BorderSide(
-            color: Colors.blue,
-            width: 2,     
-          ),
-        ),
+          shape: CircleBorder(),
           child: Image.asset(
             'assets/icons/chatbot.png',
-            width: 36.w,
-            height: 36.h,)
+            width: 56.w,
+            height: 56.h,)
         ),
     ));
   }

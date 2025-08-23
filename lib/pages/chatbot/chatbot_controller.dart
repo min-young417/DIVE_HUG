@@ -50,4 +50,17 @@ class ChatbotController extends GetxController {
           Message(text: "요청 실패: $e", sender: Sender.bot);
     }
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    messages.add(
+      Message(
+        text:
+            "안녕하세요. 안심전세 챗봇이에요! 무엇을 도와드릴까요?\n임대차계약에서 사용되는 용어부터 법률 정보까지 무엇이든 물어보세요!",
+        sender: Sender.bot,
+      ),
+    );
+  }
 }

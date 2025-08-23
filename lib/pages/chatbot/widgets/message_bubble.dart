@@ -23,11 +23,7 @@ class MessageBubble extends StatelessWidget {
             isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isUser) ...[
-            CircleAvatar(
-              radius: 16,
-              backgroundColor: Colors.blueAccent,
-              child: Image.asset('assets/icons/chatbot.png', width: 18.sp, height: 18.sp,),
-            ),
+            Image.asset('assets/icons/chatbot.png', width: 32.sp, height: 32.sp,),
             const SizedBox(width: 8),
           ],
           Flexible(
