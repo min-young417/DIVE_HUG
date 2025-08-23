@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dive_hug/common/location_service.dart';
 import 'package:dive_hug/pages/predict_map/models/risk_response.dart';
 import 'package:dive_hug/pages/predict_map/widgets/predict_bottomsheet.dart';
+import 'package:dive_hug/pages/predict_map/widgets/select_dong_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,13 +57,23 @@ class PredictMapController extends GetxController {
           point: LatLng(e['위도'], e['경도']),
           child: GestureDetector(
             onTap: (){
-              Get.bottomSheet(
-                isScrollControlled: true,
-                PredictBottomsheet(
-                  building: e,
-                  predictAndExplain: predictAndExplain
-                ),
-              );
+              if(e['주택유형'] == '아파트'){
+                Get.bottomSheet(
+                  isScrollControlled: true,
+                  SelectDongBottomsheet(
+                    building: e,
+                    predictAndExplain: predictAndExplain,
+                  )
+                );
+              } else {
+                Get.bottomSheet(
+                  isScrollControlled: true,
+                  PredictBottomsheet(
+                    building: e,
+                    predictAndExplain: predictAndExplain,
+                  ),
+                );
+              }
             },
             child: Container(
               decoration: BoxDecoration(
