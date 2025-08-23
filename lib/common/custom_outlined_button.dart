@@ -5,18 +5,20 @@ class CustomOutlinedButton extends StatelessWidget {
     super.key,
     required this.onPress,
     required this.text,
-    this.borderColor,
+    this.color,
+    this.height,
   });
 
   final Function() onPress;
   final String text;
-  final Color? borderColor;
+  final Color? color;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 36,
+      height: height ?? 36,
       child: ElevatedButton(
         onPressed: onPress,
         style: ElevatedButton.styleFrom(
@@ -24,13 +26,14 @@ class CustomOutlinedButton extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4), 
-            side: BorderSide(color: Colors.blue)
+            side: BorderSide(color: color ?? Colors.blue)
           ),
         ),
         child: Text(
           text,
+          textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.blue, 
+            color: color ?? Colors.blue, 
             fontSize: 14,
           ),
         ),

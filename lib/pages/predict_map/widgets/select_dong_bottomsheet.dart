@@ -1,21 +1,17 @@
 import 'package:dive_hug/common/custom_textfiled.dart';
-import 'package:dive_hug/pages/predict_map/models/risk_response.dart';
+import 'package:dive_hug/common/custom_theme.dart';
 import 'package:dive_hug/pages/predict_map/widgets/custom_button.dart';
-import 'package:dive_hug/pages/predict_map/widgets/predict_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class SelectDongBottomsheet extends StatelessWidget{
   const SelectDongBottomsheet({
     super.key,
     required this.building, 
-    required this.predictAndExplain,
   });
 
   final Map building;
-  final Future<RiskResponse?> Function(Map data) predictAndExplain;
 
   @override
   Widget build(BuildContext context) {
@@ -29,63 +25,82 @@ class SelectDongBottomsheet extends StatelessWidget{
         color: Colors.white,
       ),
       margin: EdgeInsets.only(top: 43.h),
-      padding: EdgeInsets.all(14.sp),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        spacing: 16.h,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4.h,
-            children: [
-              Text(
-                '동',
-                style: TextStyle(fontWeight: FontWeight.w500),),
-              CustomTextfiled(
-                controller: dongController,
-                hintText: '101',
-                isNumber: true,),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4.h,
-            children: [
-              Text(
-                '층',
-                style: TextStyle(fontWeight: FontWeight.w500),),
-              CustomTextfiled(
-                controller: floorController,
-                hintText: '3',
-                isNumber: true,),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4.h,
-            children: [
-              Text(
-                '호수',
-                style: TextStyle(fontWeight: FontWeight.w500),),
-              CustomTextfiled(
-                controller: hoController,
-                hintText: '301',
-                isNumber: true,),
-            ],
-          ),
-          CustomButton(
-            onPress: () {
-              Get.bottomSheet(
-                isScrollControlled: true,
-                PredictBottomsheet(
-                  building: building,
-                  predictAndExplain: predictAndExplain,
+          Padding(
+            padding: EdgeInsets.all(14.sp),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 6.h,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        Get.close(0);
+                      },
+                      child: Image.asset('assets/icons/cross.png',
+                        width: 34.sp, height: 24.sp,),
+                    ),
+                  ],
                 ),
-              );
-            }, 
-            text: '입력 완료',),
-          SizedBox(height: 16.h,)
-        ]
+                Text(
+                  '시세 확인',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 24.h, top: 12.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              building['단지명'] ?? '없음',
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                              softWrap: true,
+                            ),
+                            Text(
+                              building['전체주소'] ?? '없음',
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                              softWrap: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                CustomTextfiled(
+                  controller: dongController,
+                  hintText: '동을 입력해주세요. ex) 101',
+                  isNumber: true,),
+                CustomTextfiled(
+                  controller: floorController,
+                  hintText: '층을 입력해주세요. ex) 3',
+                  isNumber: true,),
+               CustomTextfiled(
+                  controller: hoController,
+                  hintText: '호를 입력해주세요. ex) 301',
+                  isNumber: true,),
+              ]
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsGeometry.symmetric(vertical: 16.h),
+            child: CustomButton(
+              onPress: () {
+                Get.toNamed('/buildingInfo', arguments: building);
+              }, 
+              text: '확인',
+              color: CustomTheme.mainColor,),
+          ),
+        ],
       )
     );
   }

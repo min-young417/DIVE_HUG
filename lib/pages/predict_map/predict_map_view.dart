@@ -1,4 +1,5 @@
 import 'package:dive_hug/common/custom_textfiled.dart';
+import 'package:dive_hug/common/custom_theme.dart';
 import 'package:dive_hug/pages/predict_map/widgets/custom_thumb_shape.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -119,7 +120,44 @@ class PredictMapView extends GetView<PredictMapController> {
                 )
               ),
 
-              /// 줌 컨트롤 바
+              // 최근 조회
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(bottom: BorderSide(color: Colors.grey))
+                ),
+                padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 14.w),
+                child: Row(
+                  children: [
+                    Text('최근 시세 조회',
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w500,
+                        color: CustomTheme.mainColor
+                      ),),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 0.5)
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 12.w),
+                      height: 15.h,
+                    ),
+                    Text(
+                      '서면 세종 그랑시아(08.17)',
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: CustomTheme.subColor
+                      ),),
+                    const Spacer(),
+                    Image.asset(
+                      'assets/icons/down-arrow.png',
+                      width: 13.sp,
+                      height: 15.sp,)
+                  ],
+                ),
+              ),
+
+              // 줌 컨트롤 바
               Padding(
                 padding: EdgeInsetsGeometry.symmetric(vertical: 50.h, horizontal: 14.w),
                 child: Row(

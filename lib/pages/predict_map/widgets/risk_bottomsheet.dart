@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 
 class RiskBottomsheet extends StatelessWidget {
   const RiskBottomsheet({
@@ -27,9 +28,21 @@ class RiskBottomsheet extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '위험도 계산',
-                style: TextStyle(fontWeight: FontWeight.w500),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '위험도 계산',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Get.close(0);
+                    },
+                    child: Image.asset('assets/icons/cross.png',
+                      width: 20.sp, height: 20.sp,),
+                  )
+                ],
               ),
               Divider(thickness: 1, color: Colors.black,),
             ],
@@ -78,12 +91,12 @@ class RiskBottomsheet extends StatelessWidget {
                               '위험 수준',
                               style: TextStyle(fontWeight: FontWeight.w500),),
                             Text(
-                              score > 75 ? '매우 높음' : score > 50 ? "높음" : "보통",
+                              score > 14.8 ? '매우 높음' : score > 7.4 ? "높음" : "보통",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: score > 75 
-                                  ? Colors.red : score > 50 
+                                color: score > 14.8
+                                  ? Colors.red : score > 7.4 
                                   ? Colors.orange : Colors.green
                               ),
                             )

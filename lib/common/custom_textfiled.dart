@@ -18,14 +18,14 @@ class CustomTextfiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 34.h,
+      height: 36.h,
       child: TextField(
         controller: controller,
         keyboardType: isNumber ? TextInputType.number : null,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
-            fontSize: 11.sp,
+            fontSize: 12.sp,
             color: Color.fromRGBO(150, 150, 150, 1),
           ),
           filled: true,
@@ -49,7 +49,7 @@ class CustomTextfiled extends StatelessWidget {
           ),
         ),
         style: TextStyle(
-          fontSize: 11.sp
+          fontSize: 12.sp
         ),
       ),
     );
